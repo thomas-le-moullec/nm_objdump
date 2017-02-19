@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Thu Feb 16 10:17:22 2017 Thomas LE MOULLEC
-** Last update Fri Feb 17 11:59:53 2017 Thomas LE MOULLEC
+** Last update Sun Feb 19 14:28:17 2017 Thomas LE MOULLEC
 */
 
 #include <elf.h>
@@ -36,3 +36,19 @@ typedef struct	s_machines
 }		t_machines;
 
 typedef enum {TRUE, FALSE} BOOL;
+
+extern BOOL global_option_f;
+extern BOOL global_only_flags;
+extern char *binary;
+
+char             **parse_options(char **, int *);
+BOOL		my_objdump(char *);
+BOOL            init_elf(int, t_elf *);
+BOOL		dump_obj(Elf64_Shdr *, char *, int, t_elf *);
+char             *get_architecture(t_elf *);
+BOOL             is_correct_data(Elf64_Ehdr *);
+BOOL             is_correct_type(int);
+BOOL             is_correct_class(unsigned char *);
+BOOL             is_elf(char *);
+char             *get_magic(unsigned char *);
+BOOL             bad_format_file(char *);
