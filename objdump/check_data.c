@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 19 13:53:33 2017 Thomas LE MOULLEC
-** Last update Sun Feb 19 13:56:10 2017 Thomas LE MOULLEC
+** Last update Sun Feb 19 15:32:57 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
@@ -34,14 +34,14 @@ BOOL             is_correct_type(int type)
   return (TRUE);
 }
 
-BOOL             is_correct_data(Elf64_Ehdr *elf)
+BOOL             is_correct_data(unsigned char *identifier, int type, int machine, int version)
 {
-  if (elf->e_ident[EI_CLASS] == ELFCLASSNONE ||	    \
-      elf->e_ident[EI_DATA] == ELFDATANONE ||	    \
-      elf->e_ident[EI_VERSION] == EV_NONE ||	    \
-      elf->e_type == ET_NONE ||			    \
-      elf->e_machine == EM_NONE ||		    \
-      elf->e_version == EV_NONE)
+  if (identifier[EI_CLASS] == ELFCLASSNONE ||		    \
+      identifier[EI_DATA] == ELFDATANONE ||		    \
+      identifier[EI_VERSION] == EV_NONE ||		    \
+      type == ET_NONE ||				    \
+      machine == EM_NONE ||				    \
+      version == EV_NONE)
     return (FALSE);
   return (TRUE);
 }

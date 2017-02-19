@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 19 13:56:47 2017 Thomas LE MOULLEC
-** Last update Sun Feb 19 13:58:25 2017 Thomas LE MOULLEC
+** Last update Sun Feb 19 16:17:35 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
@@ -24,7 +24,7 @@ char             *get_magic(unsigned char *identifier)
   return (magic);
 }
 
-char			*get_architecture(t_elf *elformat)
+char			*get_architecture(int machine)
 {
   t_machines		architectures[] = {{EM_NONE, "None"}, {EM_M32, "WE32100"},
 				       {EM_SPARC, "Sparc"}, {EM_386, "Intel 80386"},
@@ -42,7 +42,7 @@ char			*get_architecture(t_elf *elformat)
   i = 0;
   while (i < MACHINES_NBR)
     {
-      if (elformat->elf->e_machine == architectures[i].id)
+      if (machine == architectures[i].id)
 	return (architectures[i].archi);
       i++;
     }
