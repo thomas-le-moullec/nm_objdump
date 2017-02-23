@@ -5,10 +5,52 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 19 14:01:30 2017 Thomas LE MOULLEC
-** Last update Sun Feb 19 16:41:26 2017 Thomas LE MOULLEC
+** Last update Wed Feb 22 16:57:28 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
+
+void            get_name_obj32(void *data, Elf32_Ehdr *elf, t_elf *elformat)
+{
+  Elf32_Shdr    *sct;
+  Elf32_Sym     *symtab;
+  char          *strtab;
+  int           i;
+
+  sct = (Elf32_Shdr *)(data + elf->e_shoff);
+  i = 0;
+  while (i < elf->e_shnum)
+    {
+      if (sct[i].sh_type == SHT_SYMTAB)
+	{
+	  strtab = (char *)elf + sct[sct[i].sh_link].sh_offset;
+	  symtab = (void *)elf + sct[i].sh_offset;
+	}
+      i++;
+    }
+  elformat->obj_archive = &strtab[symtab[1].st_name];
+}
+
+void            get_name_obj64(void *data, Elf64_Ehdr *elf, t_elf *elformat)
+{
+  Elf64_Shdr    *sct;
+  Elf64_Sym     *symtab;
+  char          *strtab;
+  int           i;
+
+  sct = (Elf64_Shdr *)(data + elf->e_shoff);
+  i = 0;
+  while (i < elf->e_shnum)
+    {
+      if (sct[i].sh_type == SHT_SYMTAB)
+	{
+	  strtab = (char *)elf + sct[sct[i].sh_link].sh_offset;
+	  symtab = (void *)elf + sct[i].sh_offset;
+	}
+      i++;
+    }
+  elformat->obj_archive = &strtab[symtab[1].st_name];
+}
 
 static void     dump_header(t_elf *elformat, unsigned char *identifier, int type, long unsigned int entry, int machine)
 {
@@ -17,18 +59,32 @@ static void     dump_header(t_elf *elformat, unsigned char *identifier, int type
     elformat->class = 64;
   else
     elformat->class = 32;
-  printf("%s:     file format elf%d-x86-%d\n", elformat->file,  \
-	 elformat->class, elformat->class);
-  printf("architecture: %s, flags ", get_architecture(machine));
+  if (elformat->is_archive == FALSE)
+    printf("%s", elformat->file);
+  else
+    printf("%s", elformat->obj_archive);
+  printf(":     file format elf%d", elformat->class);
+  if (elformat->class == 64)
+    printf("-x86-%d\n", elformat->class);
+  else
+    printf("-i386\n");
+  if (strcmp(get_architecture(machine), "Intel 80386") == 0 && \
+      elformat->class == 32)
+    printf("architecture: i386, flags ");
+  else
+    printf("architecture: %s, flags ", get_architecture(machine));
   if (type == ET_REL)
-    printf("Pas cool\n");
+    printf("0x00000011:\nHAS_RELOC, HAS_SYMS\n");
   else if (type == ET_EXEC)
     printf("0x00000112:\nEXEC_P, HAS_SYMS, D_PAGED\n");
   else if (type == ET_DYN)
     printf("0x00000150:\nHAS_SYMS, DYNAMIC, D_PAGED\n");
   else
     fprintf(stderr, "An unknown type\n");
-  printf("start address 0x%016lx\n\n", entry);
+  if (elformat->class == 64)
+    printf("start address 0x%016lx\n\n", entry);
+  else
+    printf("start address 0x%08lx\n\n", entry);
 }
 
 static void     dump_hexa_64(unsigned char *data, int bytes, int i, Elf64_Shdr *shdr)
@@ -160,9 +216,14 @@ BOOL     dump_obj_64(Elf64_Shdr *shdr, char *strtab, int shnum, t_elf *elformat)
 	return (bad_format_file(elformat->file));
       if (strcmp(&strtab[shdr[i].sh_name], ".shstrtab") == 0)
 	break ;
-      if (&strtab[shdr[i].sh_name] && shdr[i].sh_type != SHT_NULL && \
-	            shdr[i].sh_type != SHT_SHLIB && shdr[i].sh_type != SHT_SYMTAB &&
-	  shdr[i].sh_size && strcmp(&strtab[shdr[i].sh_name], ".bss") != 0)
+      if (&strtab[shdr[i].sh_name] && shdr[i].sh_type != SHT_NULL &&	\
+	  shdr[i].sh_type != SHT_SHLIB && shdr[i].sh_type != SHT_SYMTAB && \
+	  shdr[i].sh_size && strcmp(&strtab[shdr[i].sh_name], ".bss") != 0 && \
+	  strcmp(&strtab[shdr[i].sh_name], ".rela.text") != 0 &&	\
+	  strcmp(&strtab[shdr[i].sh_name], ".rela.debug_info") != 0 &&	\
+	  strcmp(&strtab[shdr[i].sh_name], ".rela.debug_aranges") != 0 && \
+	  strcmp(&strtab[shdr[i].sh_name], ".rela.debug_line") != 0 &&	\
+	  strcmp(&strtab[shdr[i].sh_name], ".rela.eh_frame") != 0)
 	dump_section_64(shdr, strtab, elformat, i);
       i++;
     }
@@ -182,9 +243,14 @@ BOOL     dump_obj_32(Elf32_Shdr *shdr, char *strtab, int shnum, t_elf *elformat)
 	return (bad_format_file(elformat->file));
       if (strcmp(&strtab[shdr[i].sh_name], ".shstrtab") == 0)
 	break ;
-      if (&strtab[shdr[i].sh_name] && shdr[i].sh_type != SHT_NULL && \
-	            shdr[i].sh_type != SHT_SHLIB && shdr[i].sh_type != SHT_SYMTAB &&
-	  shdr[i].sh_size && strcmp(&strtab[shdr[i].sh_name], ".bss") != 0)
+      if (&strtab[shdr[i].sh_name] && shdr[i].sh_type != SHT_NULL &&	\
+	  shdr[i].sh_type != SHT_SHLIB && shdr[i].sh_type != SHT_SYMTAB && \
+	  shdr[i].sh_size && strcmp(&strtab[shdr[i].sh_name], ".bss") != 0 && \
+	  strcmp(&strtab[shdr[i].sh_name], ".rela.text") != 0 &&	\
+	  strcmp(&strtab[shdr[i].sh_name], ".rela.debug_info") != 0 &&	\
+	  strcmp(&strtab[shdr[i].sh_name], ".rela.debug_aranges") != 0 && \
+	  strcmp(&strtab[shdr[i].sh_name], ".rela.debug_line") != 0 &&	\
+	  strcmp(&strtab[shdr[i].sh_name], ".rela.eh_frame") != 0)
 	dump_section_32(shdr, strtab, elformat, i);
       i++;
     }

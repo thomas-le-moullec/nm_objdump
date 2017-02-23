@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Thu Feb 16 10:17:22 2017 Thomas LE MOULLEC
-** Last update Sun Feb 19 16:47:40 2017 Thomas LE MOULLEC
+** Last update Thu Feb 23 19:30:27 2017 Thomas LE MOULLEC
 */
 
 #include <elf.h>
@@ -19,7 +19,7 @@
 #define MACHINES_NBR 18
 
 typedef enum {TRUE, FALSE} BOOL;
-typedef enum {SYS_32, SYS_64, ERROR_SYS} SYS;
+typedef enum {SYS_32, SYS_64, ERROR_SYS, UNDEFINED} SYS;
 extern BOOL global_option_f;
 extern BOOL global_only_flags;
 extern char *binary;
@@ -35,6 +35,9 @@ typedef struct	s_elf
   char		*file;
   unsigned int	class;
   int		filesize;
+  BOOL		is_archive;
+  char		*obj_archive;
+  int		size_archive;
 }		t_elf;
 
 typedef struct	s_machines
@@ -55,3 +58,10 @@ BOOL             is_correct_class(unsigned char *);
 BOOL             is_elf(char *);
 char             *get_magic(unsigned char *);
 BOOL             bad_format_file(char *);
+BOOL		is_archive(t_elf *);
+void		archive(t_elf *);
+SYS		init_64_Elf(t_elf *, void *);
+SYS		init_32_Elf(t_elf *, void *);
+SYS            file_format(void *);
+SYS            check_archive(t_elf *);
+char		*my_revstr(char *);
