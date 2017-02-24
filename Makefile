@@ -5,7 +5,7 @@
 ## Login   <le-mou_t@epitech.net>
 ## 
 ## Started on  Sun Feb 19 12:08:27 2017 Thomas LE MOULLEC
-## Last update Wed Feb 22 17:51:44 2017 Thomas LE MOULLEC
+## Last update Fri Feb 24 10:31:42 2017 Thomas LE MOULLEC
 ##
 
 CC      	=       gcc -g
@@ -22,6 +22,8 @@ SRCS_OBJ  	=       ./objdump/my_objdump.c 		\
 			./objdump/archive.c      	\
 			./objdump/main.c      		\
 			./objdump/my_revstr.c      	\
+			./objdump/file_spec.c      	\
+			./objdump/obj_archive.c      	\
 
 NAME_NM 	=       my_nm
 

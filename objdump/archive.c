@@ -5,90 +5,10 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Tue Feb 21 15:10:18 2017 Thomas LE MOULLEC
-** Last update Thu Feb 23 19:32:58 2017 Thomas LE MOULLEC
+** Last update Fri Feb 24 10:25:29 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
-
-static char		*to_obj(char *name)
-{
-  int			i;
-  char			*str;
-
-  i = 0;
-  if (name == NULL || (str = malloc(sizeof(*str) * strlen(name) + 1)) == NULL)
-    return (NULL);
-  while (name[i] && name[i] != '.')
-    {
-      str[i] = name[i];
-      i++;
-    }
-  if (name[i] == '.' && name[i + 1] == 'c')
-    {
-      str[i++] = '.';
-      str[i++] = 'o';
-    }
-  str[i] = '\0';
-  return (str);
-}
-
-static void		get_name_obj32(void *data, Elf32_Ehdr *elf, t_elf *elformat)
-{
-  Elf32_Shdr    *sct;
-  Elf32_Sym     *symtab;
-  char          *strtab;
-  int           i;
-
-  sct = (Elf32_Shdr *)(data + elf->e_shoff);
-  i = 0;
-  while (i < elf->e_shnum)
-    {
-      if (sct[i].sh_type == SHT_SYMTAB)
-	{
-	  strtab = (char *)elf + sct[sct[i].sh_link].sh_offset;
-	  symtab = (void *)elf + sct[i].sh_offset;
-	}
-      i++;
-    }
-  elformat->obj_archive = to_obj(&strtab[symtab[1].st_name]);
-}
-
-static void		get_name_obj64(void *data, Elf64_Ehdr *elf, t_elf *elformat)
-{
-  Elf64_Shdr    *sct;
-  Elf64_Sym     *symtab;
-  char          *strtab;
-  int           i;
-
-  sct = (Elf64_Shdr *)(data + elf->e_shoff);
-  i = 0;
-  while (i < elf->e_shnum)
-    {
-      if (sct[i].sh_type == SHT_SYMTAB)
-	{
-	  strtab = (char *)elf + sct[sct[i].sh_link].sh_offset;
-	  symtab = (void *)elf + sct[i].sh_offset;
-	}
-      i++;
-    }
-  elformat->obj_archive = to_obj(&strtab[symtab[1].st_name]);
-}
-
-BOOL		is_archive(t_elf *elformat)
-{
-  unsigned char *str;
-
-  str = (unsigned char *)elformat->data;
-  if (str && strlen((char *)str) > 8 && str[0] == '!' && str[1] == '<' && \
-      str[2] == 'a' && str[3] == 'r' && str[4] == 'c' && str[5] == 'h' && \
-      str[6] == '>' && str[7] == '\n')
-    {
-      elformat->is_archive = TRUE;
-      return (TRUE);
-    }
-  elformat->is_archive = FALSE;
-  return (FALSE);
-}
 
 static int		start_archive(t_elf *elformat)
 {
@@ -136,25 +56,6 @@ static int		find_size_part(unsigned char *str, int i, t_elf *elformat)
   elformat->size_archive += 60;
   return (atoi(my_revstr(size_part)));
 }
-
-/*static SYS		error_library(t_elf *elformat, void *data)
-{
-  SYS			result;
-
-  if ((result = file_format(data)) == SYS_32)
-    {
-      init_32_Elf(elformat, data);
-      get_name_obj32(data, elformat->elf_32, elformat);
-    }
-  else if (result == SYS_64)
-    {
-      init_64_Elf(elformat, data);
-      get_name_obj64(data, elformat->elf_64, elformat);
-    }
-  fprintf(stderr, "%s: %s: format not recognized\n", binary, elformat->obj_archive);
-  fprintf(stderr, "%s: %s: Malformed archive\n", binary, elformat->file);
-  return (ERROR_SYS);
-  }*/
 
 SYS			check_archive(t_elf *elformat)
 {

@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 19 13:43:51 2017 Thomas LE MOULLEC
-** Last update Sun Feb 19 13:45:20 2017 Thomas LE MOULLEC
+** Last update Fri Feb 24 10:27:17 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
@@ -28,7 +28,7 @@ char			**parse_options(char **av, int *ac)
     exit(-1);
   while (idx < *ac)
     {
-      if (strcmp(av[idx], "-f") == 0) //ptr on functions
+      if (strcmp(av[idx], "-f") == 0)
 	flag_f();
       else
 	{

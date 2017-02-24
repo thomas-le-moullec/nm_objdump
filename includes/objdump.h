@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Thu Feb 16 10:17:22 2017 Thomas LE MOULLEC
-** Last update Thu Feb 23 19:30:27 2017 Thomas LE MOULLEC
+** Last update Fri Feb 24 10:28:07 2017 Thomas LE MOULLEC
 */
 
 #include <elf.h>
@@ -46,6 +46,8 @@ typedef struct	s_machines
   char		*archi;
 }		t_machines;
 
+void             get_name_obj32(void *, Elf32_Ehdr *, t_elf *);
+void             get_name_obj64(void *, Elf64_Ehdr *, t_elf *);
 char             **parse_options(char **, int *);
 BOOL		my_objdump(char *);
 SYS            init_elf(int, t_elf *);
@@ -65,3 +67,6 @@ SYS		init_32_Elf(t_elf *, void *);
 SYS            file_format(void *);
 SYS            check_archive(t_elf *);
 char		*my_revstr(char *);
+BOOL             file_specifications_64(t_elf *);
+BOOL             file_specifications_32(t_elf *);
+int              filesize(int);

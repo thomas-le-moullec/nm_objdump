@@ -5,52 +5,10 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 19 14:01:30 2017 Thomas LE MOULLEC
-** Last update Wed Feb 22 16:57:28 2017 Thomas LE MOULLEC
+** Last update Fri Feb 24 10:32:33 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
-
-void            get_name_obj32(void *data, Elf32_Ehdr *elf, t_elf *elformat)
-{
-  Elf32_Shdr    *sct;
-  Elf32_Sym     *symtab;
-  char          *strtab;
-  int           i;
-
-  sct = (Elf32_Shdr *)(data + elf->e_shoff);
-  i = 0;
-  while (i < elf->e_shnum)
-    {
-      if (sct[i].sh_type == SHT_SYMTAB)
-	{
-	  strtab = (char *)elf + sct[sct[i].sh_link].sh_offset;
-	  symtab = (void *)elf + sct[i].sh_offset;
-	}
-      i++;
-    }
-  elformat->obj_archive = &strtab[symtab[1].st_name];
-}
-
-void            get_name_obj64(void *data, Elf64_Ehdr *elf, t_elf *elformat)
-{
-  Elf64_Shdr    *sct;
-  Elf64_Sym     *symtab;
-  char          *strtab;
-  int           i;
-
-  sct = (Elf64_Shdr *)(data + elf->e_shoff);
-  i = 0;
-  while (i < elf->e_shnum)
-    {
-      if (sct[i].sh_type == SHT_SYMTAB)
-	{
-	  strtab = (char *)elf + sct[sct[i].sh_link].sh_offset;
-	  symtab = (void *)elf + sct[i].sh_offset;
-	}
-      i++;
-    }
-  elformat->obj_archive = &strtab[symtab[1].st_name];
-}
 
 static void     dump_header(t_elf *elformat, unsigned char *identifier, int type, long unsigned int entry, int machine)
 {
