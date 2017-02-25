@@ -5,12 +5,24 @@
 ## Login   <le-mou_t@epitech.net>
 ## 
 ## Started on  Sun Feb 19 12:08:27 2017 Thomas LE MOULLEC
-## Last update Fri Feb 24 10:31:42 2017 Thomas LE MOULLEC
+## Last update Sat Feb 25 17:33:34 2017 Thomas LE MOULLEC
 ##
 
 CC      	=       gcc -g
 
-SRCS_NM  	=       ./nm/my_nm.c
+SRCS_NM  	=       ./nm/my_nm.c			\
+			./nm/archive.c			\
+			./nm/get_nbr_section.c		\
+			./nm/symboles.c			\
+			./nm/valid_elf.c		\
+			./nm/dump_nm.c			\
+			./nm/main.c			\
+			./nm/order_symboles.c		\
+			./nm/sym_list.c			\
+			./nm/exec_nm.c			\
+			./nm/catch_sym.c		\
+			./nm/get_data.c			\
+			./nm/check_data.c		\
 
 SRCS_OBJ  	=       ./objdump/my_objdump.c 		\
 			./objdump/check_data.c 		\

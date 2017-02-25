@@ -5,8 +5,11 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Thu Feb 16 10:17:22 2017 Thomas LE MOULLEC
-** Last update Fri Feb 24 10:28:07 2017 Thomas LE MOULLEC
+** Last update Fri Feb 24 14:36:56 2017 Thomas LE MOULLEC
 */
+
+#ifndef OBJDUMP_H_
+# define OBJDUMP_H_
 
 #include <elf.h>
 #include <fcntl.h>
@@ -70,3 +73,5 @@ char		*my_revstr(char *);
 BOOL             file_specifications_64(t_elf *);
 BOOL             file_specifications_32(t_elf *);
 int              filesize(int);
+
+#endif
