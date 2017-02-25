@@ -5,14 +5,14 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:55:56 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 20:46:00 2017 Thomas LE MOULLEC
+** Last update Sat Feb 25 21:32:13 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
 
 int             dump_nm(void *data, BOOL is_archive, t_elf *elformat)
 {
-  if (file_specifications((Elf64_Ehdr *)data, elformat->file) == FALSE)
+  if (file_specifications((Elf64_Ehdr *)data, elformat->file, is_archive) == FALSE)
     return (-1);
   if (elformat->ac > 2)
     printf("\n%s:\n", elformat->file);
@@ -23,7 +23,7 @@ int             dump_nm(void *data, BOOL is_archive, t_elf *elformat)
     return (-4);
   sort_symboles(elformat);
   if (is_archive == TRUE)
-    get_symbol(data, elformat->elf);
-  print_symb(elformat->tab, elformat->strtab, (Elf64_Shdr *)(data + elformat->elf->e_shoff));
+    get_file_name(data, elformat);
+  print_my_nm(elformat, (Elf64_Shdr *)(data + elformat->elf->e_shoff));
   return (0);
 }

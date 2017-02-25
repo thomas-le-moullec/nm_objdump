@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:29:43 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 20:43:40 2017 Thomas LE MOULLEC
+** Last update Sat Feb 25 21:13:06 2017 Thomas LE MOULLEC
 */
 
 #ifndef NM_H_
@@ -37,14 +37,14 @@ int		filesize(int);
 BOOL            my_nm(char *, int);
 int		archive(unsigned char *, t_elf *);
 int		get_nbr_size(unsigned char *, int);
-BOOL             file_specifications(Elf64_Ehdr *, char *);
+BOOL             file_specifications(Elf64_Ehdr *, char *, BOOL);
 BOOL            get_symboles(Elf64_Ehdr *, Elf64_Shdr *, char **, t_elf *);
 Elf64_Sym       **get_sym_tab(Elf64_Ehdr *, t_elf *, Elf64_Shdr *, int);
 void		sort_symboles(t_elf *);
 char            *in_case(char *);
-void            get_symbol(void *, Elf64_Ehdr *);
+void            get_file_name(void *, t_elf *);
 void            transformation(char *);
-void            print_symb(Elf64_Sym **, char *, Elf64_Shdr *);
+void            print_my_nm(t_elf *, Elf64_Shdr *);
 char            catch_sym(int, int, int, Elf64_Shdr *, Elf64_Sym *);
 int             dump_nm(void *, BOOL, t_elf *);
 char             *get_magic(unsigned char *);

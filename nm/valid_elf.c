@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 13:15:34 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 18:25:20 2017 Thomas LE MOULLEC
+** Last update Sat Feb 25 21:10:21 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
@@ -39,7 +39,7 @@ static BOOL             is_correct_data(unsigned char *identifier, int type, \
   return (TRUE);
 }
 
-BOOL             file_specifications(Elf64_Ehdr *elf, char *file)
+BOOL             file_specifications(Elf64_Ehdr *elf, char *file, BOOL is_archive)
 {
   if (!elf || elf->e_ident[EI_MAG0] != ELFMAG0 ||		 \
       elf->e_ident[EI_MAG1] != ELFMAG1 ||			 \
@@ -50,7 +50,8 @@ BOOL             file_specifications(Elf64_Ehdr *elf, char *file)
       is_correct_data(elf->e_ident, elf->e_type, elf->e_machine, \
 		      elf->e_version) == FALSE)
     {
-      fprintf(stderr, "nm: %s: File format not recognized\n", file);
+      if (is_archive == FALSE)
+	fprintf(stderr, "nm: %s: File format not recognized\n", file);
       return (FALSE);
     }
   return (TRUE);

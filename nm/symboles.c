@@ -5,50 +5,66 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:58:46 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 20:46:50 2017 Thomas LE MOULLEC
+** Last update Sat Feb 25 21:05:19 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
 
-void            transformation(char *str)
+static char             *to_obj(char *name)
 {
-  char          *new;
-  int           i;
+  int                   i;
+  char                  *str;
 
   i = 0;
-  new = strdup(str);
-  while (new[i] != '.' && new[i] != '\0')
-    i++;
-  if (new[i] == '.' && new[i + 1] == 'c')
-    new[i + 1] = 'o';
-  printf("\n%s:\n", new);
-}
-
-void            get_symbol(void *data, Elf64_Ehdr *elf)
-{
-  Elf64_Shdr    *sct;
-  Elf64_Sym     *symtab;
-  char          *strtab;
-  int           i;
-  int           depus;
-
-  sct = (Elf64_Shdr *)(data + elf->e_shoff);
-  i = 0;
-  depus = 0;
-  while (i < elf->e_shnum)
+  if (name == NULL || (str = malloc(sizeof(*str) * strlen(name) + 1)) == NULL)
+    return (NULL);
+  while (name[i] && name[i] != '.')
     {
-      if (sct[i].sh_type == SHT_SYMTAB)
-	{
-	  depus = 1;
-	  strtab = (char *)elf + sct[sct[i].sh_link].sh_offset;
-	  symtab = (void *)elf + sct[i].sh_offset;
-	}
+      str[i] = name[i];
       i++;
     }
-  if (depus == 1)
-    transformation(&strtab[symtab[1].st_name]);
-  else
+  if (name[i] == '.' && name[i + 1] == 'c')
+    {
+      str[i++] = '.';
+      str[i++] = 'o';
+    }
+  str[i] = '\0';
+  return (str);
+}
+
+static BOOL	is_in_symboles(t_elf *elformat, Elf64_Shdr *sh, BOOL is_sht, int i)
+{
+  if (sh[i].sh_type == SHT_SYMTAB)
+    {
+      elformat->strtab = (char *)elformat->elf + sh[sh[i].sh_link].sh_offset;
+      elformat->sym = (void *)elformat->elf + sh[i].sh_offset;
+      is_sht = TRUE;
+    }
+  return (is_sht);
+}
+
+static void	dump_file_obj(char *src)
+{
+  printf("\n%s:\n", to_obj(src));
+}
+
+void            get_file_name(void *data, t_elf *elformat)
+{
+  Elf64_Shdr    *sh;
+  int           i;
+  BOOL		is_sht;
+
+  sh = (Elf64_Shdr *)(data + elformat->elf->e_shoff);
+  i = 0;
+  is_sht = FALSE;
+  while (i < elformat->elf->e_shnum)
+    {
+      is_sht = is_in_symboles(elformat, sh, is_sht, i);
+      i++;
+    }
+  if (is_sht == FALSE)
     exit(-1);
+  dump_file_obj(&elformat->strtab[elformat->sym[1].st_name]);
 }
 
 static BOOL		loop_get_symboles(int *id, Elf64_Shdr *sections, \

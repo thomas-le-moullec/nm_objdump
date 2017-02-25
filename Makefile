@@ -5,10 +5,10 @@
 ## Login   <le-mou_t@epitech.net>
 ## 
 ## Started on  Sun Feb 19 12:08:27 2017 Thomas LE MOULLEC
-## Last update Sat Feb 25 17:33:34 2017 Thomas LE MOULLEC
+## Last update Sat Feb 25 21:40:51 2017 Thomas LE MOULLEC
 ##
 
-CC      	=       gcc -g
+CC      	=       gcc
 
 SRCS_NM  	=       ./nm/my_nm.c			\
 			./nm/archive.c			\

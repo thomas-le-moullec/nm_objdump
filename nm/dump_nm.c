@@ -5,33 +5,39 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 13:55:47 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 10:08:45 2017 Thomas LE MOULLEC
+** Last update Sat Feb 25 21:30:45 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
 
-void            print_symb(Elf64_Sym **tab, char *strtab, Elf64_Shdr *sections)
+static void	print_value(t_elf *elformat, int i)
 {
-  int           i;
+  if (elformat->tab[i]->st_value || elformat->tab[i]->st_shndx)
+    printf("%016x ", (unsigned int)elformat->tab[i]->st_value);
+  else
+    printf("                 ");
+}
+
+void            print_my_nm(t_elf *elformat, Elf64_Shdr *sections)
+{
+  int           idx;
   char          c;
 
-  i = 0;
-  while (tab[i] != NULL)
+  idx = 0;
+  while (elformat->tab[idx] != NULL)
     {
-      if (tab[i]->st_info != STT_FILE && strlen(&strtab[tab[i]->st_name]) != 0 \
-	  && tab[i]->st_shndx != SHN_ABS)
+      if (elformat->tab[idx]->st_info != STT_FILE &&			\
+	  strlen(&elformat->strtab[elformat->tab[idx]->st_name]) != 0	\
+	  && elformat->tab[idx]->st_shndx != SHN_ABS)
 	{
-	  if (tab[i]->st_value || tab[i]->st_shndx)
-	    printf("%016x ", (unsigned int)tab[i]->st_value);
-	  else
-	    printf("                 ");
-	  c = catch_sym(tab[i]->st_shndx,
-			ELF64_ST_TYPE(tab[i]->st_info),
-			ELF64_ST_BIND(tab[i]->st_info),
-			sections, tab[i]);
+	  print_value(elformat, idx);
+	  c = catch_sym(elformat->tab[idx]->st_shndx,	  \
+			ELF64_ST_TYPE(elformat->tab[idx]->st_info), \
+			ELF64_ST_BIND(elformat->tab[idx]->st_info), \
+			sections, elformat->tab[idx]);
 	  printf("%c ", c);
-	  printf("%s\n", &strtab[tab[i]->st_name]);
+	  printf("%s\n", &elformat->strtab[elformat->tab[idx]->st_name]);
 	}
-      i++;
+      idx++;
     }
 }
