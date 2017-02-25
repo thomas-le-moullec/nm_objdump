@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:29:43 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 17:48:34 2017 Thomas LE MOULLEC
+** Last update Sat Feb 25 20:43:40 2017 Thomas LE MOULLEC
 */
 
 #ifndef NM_H_
@@ -23,6 +23,10 @@ typedef enum {TRUE, FALSE} BOOL;
 
 typedef struct	s_elf
 {
+  Elf64_Ehdr	*elf;
+  Elf64_Sym	**tab;
+  Elf64_Sym	*sym;
+  char		*strtab;
   char		*file;
   int		ac;
   int		fileSize;
@@ -34,9 +38,9 @@ BOOL            my_nm(char *, int);
 int		archive(unsigned char *, t_elf *);
 int		get_nbr_size(unsigned char *, int);
 BOOL             file_specifications(Elf64_Ehdr *, char *);
-Elf64_Sym       **get_sym(Elf64_Ehdr *, Elf64_Shdr *, char **, t_elf *);
-Elf64_Sym       **get_tab(Elf64_Ehdr *, Elf64_Sym *, int, t_elf *);
-Elf64_Sym       **order_tab(Elf64_Sym **, char *);
+BOOL            get_symboles(Elf64_Ehdr *, Elf64_Shdr *, char **, t_elf *);
+Elf64_Sym       **get_sym_tab(Elf64_Ehdr *, t_elf *, Elf64_Shdr *, int);
+void		sort_symboles(t_elf *);
 char            *in_case(char *);
 void            get_symbol(void *, Elf64_Ehdr *);
 void            transformation(char *);

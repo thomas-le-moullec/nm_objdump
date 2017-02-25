@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:58:46 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 16:38:01 2017 Thomas LE MOULLEC
+** Last update Sat Feb 25 20:46:50 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
@@ -51,35 +51,40 @@ void            get_symbol(void *data, Elf64_Ehdr *elf)
     exit(-1);
 }
 
-Elf64_Sym       **get_sym(Elf64_Ehdr *elf, Elf64_Shdr *sections, char **strtab, t_elf *elformat)
+static BOOL		loop_get_symboles(int *id, Elf64_Shdr *sections, \
+					  Elf64_Ehdr *elf, t_elf *elformat)
 {
-  Elf64_Sym     *sym;
-  Elf64_Sym     **tab;
-  int           size;
-  int           id_sym;
   int           i;
-  int           depus;
+  BOOL		is_sym;
 
+  is_sym = FALSE;
   i = 0;
-  id_sym = -1;
-  depus = 0;
   while (i < elf->e_shnum)
     {
       if (sections[i].sh_type == SHT_SYMTAB)
 	{
-	  depus = 1;
-	  id_sym = sections[i].sh_link;
-	  sym = (void *)elf + sections[i].sh_offset;
-	  size = (sections[i].sh_size / sizeof(*sym));
-	  if ((tab = get_tab(elf, (void *)elf + sections[i].sh_offset, \
-			     size, elformat)) == NULL)
-	    return (NULL);
+	  is_sym = TRUE;
+	  *id = sections[i].sh_link;
+	  if ((elformat->tab = get_sym_tab(elf, \
+					   elformat, sections, i)) == NULL)
+	    return (FALSE);
 	}
       i++;
     }
-  if (depus == 1 && sections[id_sym].sh_type == SHT_STRTAB)
-    (*strtab) = (char *)elf + sections[id_sym].sh_offset;
-  if (depus == 0)
-    return (NULL);
-  return (tab);
+  if (is_sym == FALSE)
+    return (FALSE);
+  return (TRUE);
+}
+
+BOOL		get_symboles(Elf64_Ehdr *elf, Elf64_Shdr *sections, \
+			     char **strtab, t_elf *elformat)
+{
+  int           id;
+
+  id = 0;
+  if (loop_get_symboles(&id, sections, elf, elformat) == FALSE)
+    return (FALSE);
+  if (sections[id].sh_type == SHT_STRTAB)
+    (*strtab) = (char *)elf + sections[id].sh_offset;
+  return (TRUE);
 }

@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 10:22:52 2017 Thomas LE MOULLEC
-** Last update Fri Feb 24 10:26:00 2017 Thomas LE MOULLEC
+** Last update Sat Feb 25 16:40:10 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
@@ -54,18 +54,23 @@ void             get_name_obj32(void *data, Elf32_Ehdr *elf, t_elf *elformat)
   Elf32_Sym     *symtab;
   char          *strtab;
   int           i;
+  int		depu;
 
   sct = (Elf32_Shdr *)(data + elf->e_shoff);
   i = 0;
+  depu = 0;
   while (i < elf->e_shnum)
     {
       if (sct[i].sh_type == SHT_SYMTAB)
 	{
+	  depu = 1;
 	  strtab = (char *)elf + sct[sct[i].sh_link].sh_offset;
 	  symtab = (void *)elf + sct[i].sh_offset;
 	}
       i++;
     }
+  if (depu == 0)
+    exit(-1);
   elformat->obj_archive = to_obj(&strtab[symtab[1].st_name]);
 }
 
@@ -75,17 +80,22 @@ void             get_name_obj64(void *data, Elf64_Ehdr *elf, t_elf *elformat)
   Elf64_Sym     *symtab;
   char          *strtab;
   int           i;
+  int		depu;
 
+  depu = 0;
   sct = (Elf64_Shdr *)(data + elf->e_shoff);
   i = 0;
   while (i < elf->e_shnum)
     {
       if (sct[i].sh_type == SHT_SYMTAB)
 	{
+	  depu = 1;
 	  strtab = (char *)elf + sct[sct[i].sh_link].sh_offset;
 	  symtab = (void *)elf + sct[i].sh_offset;
 	}
       i++;
     }
+  if (depu == 0)
+    exit(-1);
   elformat->obj_archive = to_obj(&strtab[symtab[1].st_name]);
 }

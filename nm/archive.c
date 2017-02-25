@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:51:20 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 17:55:42 2017 Thomas LE MOULLEC
+** Last update Sat Feb 25 18:29:54 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
@@ -49,6 +49,7 @@ int    archive(unsigned char *file, t_elf *elformat)
   if (trunc_archive(file, elformat) == FALSE)
     return (-3);
   while (idx < elformat->fileSize - 1)
+    
     {
       if (is_separator(file, idx) == TRUE && header == TRUE)
 	{

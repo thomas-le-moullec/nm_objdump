@@ -6,12 +6,12 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 13:09:52 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 10:12:05 2017 Thomas LE MOULLEC
+** Last update Sat Feb 25 20:43:17 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
 
-char            *in_case(char *str)
+static char            *no_underscore(char *str)
 {
   char          *new;
   int           i;
@@ -21,63 +21,69 @@ char            *in_case(char *str)
   j = 0;
   new = NULL;
   if ((new = malloc((strlen(str) + 1) * sizeof(*new))) == NULL)
-    return (NULL);
-  while (str[i] == '_' && str[i] != '\0')
-    i++;
-  while (str[i] != '\0')
+    exit(-1);
+  while (str[i])
     {
-      while (str[i] == '_' && str[i] != '\0')
-	i++;
-      if (str[i] != '\0')
-	{
-	  new[j] = str[i];
-	  j++;
-	  i++;
-	}
+      if (str[i] != '_')
+	new[j++] = str[i];
+      i++;
     }
   new[j] = '\0';
   return (new);
 }
 
-static Elf64_Sym               **swap_data(Elf64_Sym **tab, char *strtab, int *i)
+static BOOL		is_data_start(t_elf *elformat, int i)
 {
-  Elf64_Sym             *tmp;
-
-  if (tab[(*i)] && tab[(*i) + 1] &&                                  \
-      strcasecmp(&strtab[tab[(*i)]->st_name], "data_start") == 0 &&     \
-      strcasecmp(&strtab[tab[(*i) + 1]->st_name], "__data_start") == 0)
-    {
-      tmp = tab[(*i)];
-      tab[(*i)] = tab[(*i) + 1];
-      tab[(*i) + 1] = tmp;
-      (*i) = 0;
-    }
-  return (tab);
+  if (elformat->tab[(i)] && elformat->tab[(i) + 1] &&			\
+      strcasecmp(&elformat->strtab[elformat->tab[i]->st_name],		\
+		 "data_start") == 0 &&					\
+      strcasecmp(&elformat->strtab[elformat->tab[i + 1]->st_name],	\
+		 "__data_start") == 0)
+    return (TRUE);
+  return (FALSE);
 }
 
-Elf64_Sym       **order_tab(Elf64_Sym **tab, char *strtab)
+static int               sort_nm(t_elf *elformat, int i)
 {
-  Elf64_Sym     *tmp;
+  if (is_data_start(elformat, i) == TRUE)
+    {
+      elformat->sym = elformat->tab[i];
+      elformat->tab[i] = elformat->tab[i + 1];
+      elformat->tab[i + 1] = elformat->sym;
+      i = 0;
+    }
+  return (i);
+}
+
+static int		sort_in_loop(t_elf *elformat, int i)
+{
+  i = sort_nm(elformat, i);
+  if (elformat->tab[i] && elformat->tab[i + 1] &&			\
+      strcasecmp(no_underscore(&elformat->strtab[elformat->tab		\
+						 [i]->st_name]),	\
+		 no_underscore(&elformat->strtab[elformat->tab		\
+						 [i + 1]->st_name])) > 0)
+    {
+      elformat->sym = elformat->tab[i];
+      elformat->tab[i] = elformat->tab[i + 1];
+      elformat->tab[i + 1] = elformat->sym;
+      i = -1;
+    }
+  return (i);
+}
+
+void			sort_symboles(t_elf *elformat)
+{
   int           size;
   int           i;
 
   size = 0;
-  while (tab[size] != NULL)
+  while (elformat->tab[size] != NULL)
     size++;
   i = 0;
   while (i < size)
     {
-      tab = swap_data(tab, strtab, &i);
-      if (tab[i] && tab[i + 1] &&                        \
-	  strcasecmp(in_case(&strtab[tab[i]->st_name]),                 \
-		     in_case(&strtab[tab[i + 1]->st_name])) > 0)
-	{
-	  tmp = tab[i];
-	  tab[i] = tab[i + 1];
-	  tab[i + 1] = tmp;
-	  i = -1;
-	}
+      i = sort_in_loop(elformat, i);
       i++;
     }
-  return (tab);
 }
