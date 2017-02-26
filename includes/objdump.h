@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Thu Feb 16 10:17:22 2017 Thomas LE MOULLEC
-** Last update Fri Feb 24 14:36:56 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 17:09:37 2017 Thomas LE MOULLEC
 */
 
 #ifndef OBJDUMP_H_
@@ -73,5 +73,16 @@ char		*my_revstr(char *);
 BOOL             file_specifications_64(t_elf *);
 BOOL             file_specifications_32(t_elf *);
 int              filesize(int);
+void            archive(t_elf *);
+SYS             init_64_Elf(t_elf *, void *);
+SYS             init_32_Elf(t_elf *, void *);
+SYS            file_format(void *);
+SYS            check_archive(t_elf *);
+char            *my_revstr(char *);
+BOOL             file_specifications_64(t_elf *);
+BOOL             file_specifications_32(t_elf *);
+int              filesize(int);
+void		dump_header(t_elf *, unsigned char *, int, int);
+void		dump_addr(long unsigned int, t_elf *);
 
 #endif

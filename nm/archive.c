@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:51:20 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 18:29:54 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 16:33:42 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
@@ -20,7 +20,7 @@ static BOOL	trunc_archive(unsigned char *data, t_elf *elformat)
   while (idx < elformat->fileSize)
     {
       if (is_separator(data, idx) == TRUE)
-	size += get_nbr_size(data, idx) + 60; // Care about get_nbr_size !!
+	size += get_size_section(data, idx - 1) + 60;
       idx++;
     }
   size += 8;
@@ -49,7 +49,6 @@ int    archive(unsigned char *file, t_elf *elformat)
   if (trunc_archive(file, elformat) == FALSE)
     return (-3);
   while (idx < elformat->fileSize - 1)
-    
     {
       if (is_separator(file, idx) == TRUE && header == TRUE)
 	{

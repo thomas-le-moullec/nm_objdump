@@ -1,4 +1,3 @@
-
 /*
 ** order_symboles.c for order_symboles in /home/le-mou_t/rendu/TEK2/Module_Memoire/PSU_2016_nmobjdump/nm
 ** 
@@ -6,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 13:09:52 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 20:43:17 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 17:44:52 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
@@ -34,10 +33,10 @@ static char            *no_underscore(char *str)
 
 static BOOL		is_data_start(t_elf *elformat, int i)
 {
-  if (elformat->tab[(i)] && elformat->tab[(i) + 1] &&			\
-      strcasecmp(&elformat->strtab[elformat->tab[i]->st_name],		\
-		 "data_start") == 0 &&					\
-      strcasecmp(&elformat->strtab[elformat->tab[i + 1]->st_name],	\
+  if (elformat->tab[(i)] && elformat->tab[(i) + 1] && \
+      strcasecmp(&elformat->strtab[elformat->tab[i]->st_name], \
+		 "data_start") == 0 && \
+      strcasecmp(&elformat->strtab[elformat->tab[i + 1]->st_name], \
 		 "__data_start") == 0)
     return (TRUE);
   return (FALSE);
@@ -59,8 +58,7 @@ static int		sort_in_loop(t_elf *elformat, int i)
 {
   i = sort_nm(elformat, i);
   if (elformat->tab[i] && elformat->tab[i + 1] &&			\
-      strcasecmp(no_underscore(&elformat->strtab[elformat->tab		\
-						 [i]->st_name]),	\
+      strcasecmp(no_underscore(&elformat->strtab[elformat->tab[i]->st_name]), \
 		 no_underscore(&elformat->strtab[elformat->tab		\
 						 [i + 1]->st_name])) > 0)
     {

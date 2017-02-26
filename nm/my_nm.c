@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:34:06 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 17:00:45 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 16:39:03 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
@@ -61,7 +61,8 @@ BOOL             my_nm(char *file, int ac)
   elformat->ac = ac;
   elformat->file = file;
   elformat->err = 0;
-  if ((data = mmap(NULL, elformat->fileSize, PROT_READ, MAP_SHARED, fd, 0)) == (void*)-1)
+  if ((data = mmap(NULL, elformat->fileSize, \
+		   PROT_READ, MAP_SHARED, fd, 0)) == (void*)-1)
     return (FALSE);
   is_archive(data, elformat);
   print_error(elformat);

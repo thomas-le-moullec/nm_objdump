@@ -5,10 +5,10 @@
 ## Login   <le-mou_t@epitech.net>
 ## 
 ## Started on  Sun Feb 19 12:08:27 2017 Thomas LE MOULLEC
-## Last update Sat Feb 25 21:40:51 2017 Thomas LE MOULLEC
+## Last update Sun Feb 26 17:50:45 2017 Thomas LE MOULLEC
 ##
 
-CC      	=       gcc
+CC      	=       gcc -g
 
 SRCS_NM  	=       ./nm/my_nm.c			\
 			./nm/archive.c			\
@@ -19,10 +19,14 @@ SRCS_NM  	=       ./nm/my_nm.c			\
 			./nm/main.c			\
 			./nm/order_symboles.c		\
 			./nm/sym_list.c			\
-			./nm/exec_nm.c			\
-			./nm/catch_sym.c		\
+			./nm/execute_nm.c		\
+			./nm/print_sym.c		\
 			./nm/get_data.c			\
 			./nm/check_data.c		\
+			./nm/which_sym.c		\
+			./nm/which_sym1.c		\
+			./nm/which_sym2.c		\
+			./nm/dump_file_obj.c		\
 
 SRCS_OBJ  	=       ./objdump/my_objdump.c 		\
 			./objdump/check_data.c 		\
@@ -36,6 +40,8 @@ SRCS_OBJ  	=       ./objdump/my_objdump.c 		\
 			./objdump/my_revstr.c      	\
 			./objdump/file_spec.c      	\
 			./objdump/obj_archive.c      	\
+			./objdump/dump_64.c      	\
+			./objdump/dump_header.c      	\
 
 NAME_NM 	=       my_nm
 

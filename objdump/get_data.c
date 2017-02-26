@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 19 13:56:47 2017 Thomas LE MOULLEC
-** Last update Sun Feb 19 16:17:35 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 16:56:58 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
@@ -29,7 +29,7 @@ char			*get_architecture(int machine)
   t_machines		architectures[] = {{EM_NONE, "None"}, {EM_M32, "WE32100"},
 				       {EM_SPARC, "Sparc"}, {EM_386, "Intel 80386"},
 				       {EM_68K, "MC68000"}, {EM_88K, "MC88000"},
-				       {EM_860, "Intel 80860"},{EM_SPARCV9, "Sparc v9"},
+				       {EM_860, "Intel 80860"}, {EM_SPARCV9, "Sparc v9"},
 				       {EM_MIPS, "MIPS R3000"}, {EM_PARISC, "HPPA"},
 				       {EM_SPARC32PLUS, "Sparc v8+"},
 				       {EM_PPC, "PowerPC"}, {EM_PPC64, "PowerPC64"},

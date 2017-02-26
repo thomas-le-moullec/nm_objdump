@@ -5,10 +5,12 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 13:55:47 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 21:30:45 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 17:46:36 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
+
+int global_idx = 0;
 
 static void	print_value(t_elf *elformat, int i)
 {
@@ -21,21 +23,19 @@ static void	print_value(t_elf *elformat, int i)
 void            print_my_nm(t_elf *elformat, Elf64_Shdr *sections)
 {
   int           idx;
-  char          c;
 
   idx = 0;
   while (elformat->tab[idx] != NULL)
     {
-      if (elformat->tab[idx]->st_info != STT_FILE &&			\
-	  strlen(&elformat->strtab[elformat->tab[idx]->st_name]) != 0	\
+      if (elformat->tab[idx]->st_info != STT_FILE && \
+	  strlen(&elformat->strtab[elformat->tab[idx]->st_name]) != 0 \
 	  && elformat->tab[idx]->st_shndx != SHN_ABS)
 	{
 	  print_value(elformat, idx);
-	  c = catch_sym(elformat->tab[idx]->st_shndx,	  \
-			ELF64_ST_TYPE(elformat->tab[idx]->st_info), \
-			ELF64_ST_BIND(elformat->tab[idx]->st_info), \
-			sections, elformat->tab[idx]);
-	  printf("%c ", c);
+	  global_idx = elformat->tab[idx]->st_shndx;
+	  print_symboles(sections, elformat->tab[idx], \
+			 ELF64_ST_BIND(elformat->tab[idx]->st_info), \
+			 ELF64_ST_TYPE(elformat->tab[idx]->st_info));
 	  printf("%s\n", &elformat->strtab[elformat->tab[idx]->st_name]);
 	}
       idx++;

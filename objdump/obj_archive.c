@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 10:22:52 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 16:40:10 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 17:00:14 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
@@ -38,7 +38,8 @@ BOOL            is_archive(t_elf *elformat)
 
   str = (unsigned char *)elformat->data;
   if (str && strlen((char *)str) > 8 && str[0] == '!' && str[1] == '<' && \
-            str[2] == 'a' && str[3] == 'r' && str[4] == 'c' && str[5] == 'h' && \
+            str[2] == 'a' && str[3] == 'r' && \
+      str[4] == 'c' && str[5] == 'h' && \
       str[6] == '>' && str[7] == '\n')
     {
       elformat->is_archive = TRUE;

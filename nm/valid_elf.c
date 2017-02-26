@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 13:15:34 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 21:10:21 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 18:08:05 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
@@ -15,7 +15,7 @@ static BOOL             is_correct_class(unsigned char *identifier)
   if (identifier[EI_CLASS] == ELFCLASS64)
     return (TRUE);
   if (identifier[EI_CLASS] == ELFCLASS32)
-    return (TRUE);
+    return (FALSE);
   return (FALSE);
 }
 
@@ -39,7 +39,8 @@ static BOOL             is_correct_data(unsigned char *identifier, int type, \
   return (TRUE);
 }
 
-BOOL             file_specifications(Elf64_Ehdr *elf, char *file, BOOL is_archive)
+BOOL             file_specifications(Elf64_Ehdr *elf, char *file, \
+				     BOOL is_archive)
 {
   if (!elf || elf->e_ident[EI_MAG0] != ELFMAG0 ||		 \
       elf->e_ident[EI_MAG1] != ELFMAG1 ||			 \

@@ -5,34 +5,13 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:58:46 2017 Thomas LE MOULLEC
-** Last update Sat Feb 25 21:05:19 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 16:44:57 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
 
-static char             *to_obj(char *name)
-{
-  int                   i;
-  char                  *str;
-
-  i = 0;
-  if (name == NULL || (str = malloc(sizeof(*str) * strlen(name) + 1)) == NULL)
-    return (NULL);
-  while (name[i] && name[i] != '.')
-    {
-      str[i] = name[i];
-      i++;
-    }
-  if (name[i] == '.' && name[i + 1] == 'c')
-    {
-      str[i++] = '.';
-      str[i++] = 'o';
-    }
-  str[i] = '\0';
-  return (str);
-}
-
-static BOOL	is_in_symboles(t_elf *elformat, Elf64_Shdr *sh, BOOL is_sht, int i)
+static BOOL	is_in_symboles(t_elf *elformat, Elf64_Shdr *sh, \
+			       BOOL is_sht, int i)
 {
   if (sh[i].sh_type == SHT_SYMTAB)
     {
@@ -41,11 +20,6 @@ static BOOL	is_in_symboles(t_elf *elformat, Elf64_Shdr *sh, BOOL is_sht, int i)
       is_sht = TRUE;
     }
   return (is_sht);
-}
-
-static void	dump_file_obj(char *src)
-{
-  printf("\n%s:\n", to_obj(src));
 }
 
 void            get_file_name(void *data, t_elf *elformat)

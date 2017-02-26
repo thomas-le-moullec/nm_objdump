@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Wed Feb 15 09:06:22 2017 Thomas LE MOULLEC
-** Last update Fri Feb 24 10:06:13 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 16:59:26 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
@@ -26,10 +26,10 @@ static BOOL	my_dump(int fd, t_elf *elformat)
   if (result == UNDEFINED)
     archive(elformat);
   if (result == SYS_64)
-    dump_obj_64(elformat->shdr_64, elformat->strtab,		\
+    dump_obj_64(elformat->shdr_64, elformat->strtab, \
 		elformat->elf_64->e_shnum, elformat);
   if (result == SYS_32)
-    dump_obj_32(elformat->shdr_32, elformat->strtab,		\
+    dump_obj_32(elformat->shdr_32, elformat->strtab, \
 		elformat->elf_32->e_shnum, elformat);
   return (TRUE);
 }

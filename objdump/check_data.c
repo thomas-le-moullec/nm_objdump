@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 19 13:53:33 2017 Thomas LE MOULLEC
-** Last update Sun Feb 19 15:32:57 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 16:52:12 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
@@ -34,7 +34,8 @@ BOOL             is_correct_type(int type)
   return (TRUE);
 }
 
-BOOL             is_correct_data(unsigned char *identifier, int type, int machine, int version)
+BOOL             is_correct_data(unsigned char *identifier, int type, \
+				 int machine, int version)
 {
   if (identifier[EI_CLASS] == ELFCLASSNONE ||		    \
       identifier[EI_DATA] == ELFDATANONE ||		    \

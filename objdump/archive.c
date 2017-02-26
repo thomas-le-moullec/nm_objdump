@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Tue Feb 21 15:10:18 2017 Thomas LE MOULLEC
-** Last update Fri Feb 24 10:25:29 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 17:00:45 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
@@ -93,14 +93,14 @@ static void		obj_section(void *data, t_elf *elformat)
     {
       init_32_Elf(elformat, data);
       get_name_obj32(data, elformat->elf_32, elformat);
-      dump_obj_32(elformat->shdr_32, elformat->strtab,		\
+      dump_obj_32(elformat->shdr_32, elformat->strtab, \
 		  elformat->elf_32->e_shnum, elformat);
     }
   else if (result == SYS_64)
     {
       init_64_Elf(elformat, data);
       get_name_obj64(data, elformat->elf_64, elformat);
-      dump_obj_64(elformat->shdr_64, elformat->strtab,		\
+      dump_obj_64(elformat->shdr_64, elformat->strtab, \
 		  elformat->elf_64->e_shnum, elformat);
     }
 }
@@ -110,7 +110,6 @@ void			archive(t_elf *elformat)
   unsigned char		*str;
   int			i;
   int			j;
-
 
   if ((j = start_archive(elformat)) == -1)
     return ;

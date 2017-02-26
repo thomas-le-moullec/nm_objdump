@@ -5,7 +5,7 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 19 13:48:28 2017 Thomas LE MOULLEC
-** Last update Fri Feb 24 10:14:42 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 17:01:55 2017 Thomas LE MOULLEC
 */
 
 #include "objdump.h"
@@ -18,16 +18,16 @@ SYS	init_32_Elf(t_elf *elformat, void *data)
       bad_format_file(elformat->file);
       return (ERROR_SYS);
     }
-  if (elformat->is_archive == FALSE &&				\
-      (int)(elformat->elf_32->e_shoff +				\
-	    (elformat->elf_32->e_shentsize *			\
+  if (elformat->is_archive == FALSE && \
+      (int)(elformat->elf_32->e_shoff + \
+	    (elformat->elf_32->e_shentsize * \
 	     elformat->elf_32->e_shnum)) != elformat->filesize)
     {
       fprintf(stderr, "%s: %s: File truncated\n", binary, elformat->file);
       return (ERROR_SYS);
     }
   elformat->shdr_32 = (Elf32_Shdr *)(data + elformat->elf_32->e_shoff);
-  elformat->strtab = (char *)(elformat->data + elformat->shdr_32 \
+  elformat->strtab = (char *)(elformat->data + elformat->shdr_32	\
 			      [elformat->elf_32->e_shstrndx].sh_offset);
   return (SYS_32);
 }
@@ -40,9 +40,9 @@ SYS	init_64_Elf(t_elf *elformat, void *data)
       bad_format_file(elformat->file);
       return (ERROR_SYS);
     }
-  if (elformat->is_archive == FALSE &&				\
-      (int)(elformat->elf_64->e_shoff +				\
-	    (elformat->elf_64->e_shentsize *			\
+  if (elformat->is_archive == FALSE && \
+      (int)(elformat->elf_64->e_shoff + \
+	    (elformat->elf_64->e_shentsize * \
 	     elformat->elf_64->e_shnum)) != elformat->filesize)
     {
       fprintf(stderr, "%s: %s: File truncated\n", binary, elformat->file);
@@ -60,7 +60,9 @@ SYS		init_elf(int fd, t_elf *elformat)
 
   if ((elformat->filesize = filesize(fd)) < EI_NIDENT)
     return (bad_format_file(elformat->file));
-  elformat->data = mmap(NULL, elformat->filesize, PROT_READ, MAP_SHARED, fd, 0);
+  if ((elformat->data = mmap(NULL, elformat->filesize, \
+			     PROT_READ, MAP_SHARED, fd, 0)) == (void*)-1)
+    return (ERROR_SYS);
   if ((is_archive(elformat)) == TRUE)
     return (check_archive(elformat));
   if ((result = file_format(elformat->data)) == SYS_32)

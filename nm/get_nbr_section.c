@@ -5,35 +5,26 @@
 ** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:54:12 2017 Thomas LE MOULLEC
-** Last update Fri Feb 24 12:55:05 2017 Thomas LE MOULLEC
+** Last update Sun Feb 26 16:33:27 2017 Thomas LE MOULLEC
 */
 
 #include "nm.h"
 
-static int     my_getnbr_space(unsigned char *str)
+int     get_size_section(unsigned char *str, int i)
 {
-  int   res;
-  int   i;
+  int	result;
 
-  res = 0;
-  i = 0;
-  while (str[i] >= '0' && str[i] <= '9')
-    {
-      res *= 10;
-      res += str[i] - '0';
-      i++;
-    }
-  return (res);
-}
-
-int     get_nbr_size(unsigned char *str, int i)
-{
-  i--;
+  result = 0;
   while (i > 0 && (str[i] == ' ' || str[i] == '/' || str[i] == '\\' ||
 		   str[i] == '`' || str[i] == '\n'))
     i--;
   while (i > 0 && str[i] >= '0' && str[i] <= '9')
     i--;
   i++;
-  return (my_getnbr_space(&str[i]));
+  while (str[i] >= '0' && str[i] <= '9')
+    {
+      result *= 10;
+      result += str[i++] - '0';
+    }
+  return (result);
 }
