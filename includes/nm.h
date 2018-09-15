@@ -1,8 +1,6 @@
 /*
-** nm.h for nm.h in /home/le-mou_t/rendu/TEK2/Module_Memoire/PSU_2016_nmobjdump/nm
 ** 
 ** Made by Thomas LE MOULLEC
-** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:29:43 2017 Thomas LE MOULLEC
 ** Last update Sun Feb 26 17:41:05 2017 Thomas LE MOULLEC

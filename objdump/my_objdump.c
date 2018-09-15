@@ -1,8 +1,6 @@
 /*
-** objdump.c for objdump in /home/le-mou_t/rendu/TEK2/Module_Memoire/PSU_2016_nmobjdump
 ** 
 ** Made by Thomas LE MOULLEC
-** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Wed Feb 15 09:06:22 2017 Thomas LE MOULLEC
 ** Last update Sun Feb 26 16:59:26 2017 Thomas LE MOULLEC

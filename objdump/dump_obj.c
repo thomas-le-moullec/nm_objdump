@@ -1,8 +1,6 @@
 /*
-** dump_obj.c for dump in /home/le-mou_t/rendu/TEK2/Module_Memoire/PSU_2016_nmobjdump/objdump
 ** 
 ** Made by Thomas LE MOULLEC
-** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 19 14:01:30 2017 Thomas LE MOULLEC
 ** Last update Sun Feb 26 18:17:55 2017 Thomas LE MOULLEC

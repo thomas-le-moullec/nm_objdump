@@ -1,8 +1,6 @@
 /*
-** symboles.c for symboles in /home/le-mou_t/rendu/TEK2/Module_Memoire/PSU_2016_nmobjdump/nm
 ** 
 ** Made by Thomas LE MOULLEC
-** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 12:58:46 2017 Thomas LE MOULLEC
 ** Last update Sun Feb 26 16:44:57 2017 Thomas LE MOULLEC

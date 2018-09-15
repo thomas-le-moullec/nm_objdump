@@ -1,8 +1,6 @@
 /*
-** file_spec.c for file_spec in /home/le-mou_t/rendu/TEK2/Module_Memoire/PSU_2016_nmobjdump
 ** 
 ** Made by Thomas LE MOULLEC
-** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 10:11:47 2017 Thomas LE MOULLEC
 ** Last update Fri Feb 24 10:14:37 2017 Thomas LE MOULLEC

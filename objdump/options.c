@@ -1,8 +1,6 @@
 /*
-** options.c for options in /home/le-mou_t/rendu/TEK2/Module_Memoire/PSU_2016_nmobjdump/objdump
 ** 
 ** Made by Thomas LE MOULLEC
-** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 19 13:43:51 2017 Thomas LE MOULLEC
 ** Last update Fri Feb 24 10:27:17 2017 Thomas LE MOULLEC

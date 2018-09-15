@@ -1,8 +1,6 @@
 /*
-** dump_64.c for dump_64.c in /home/le-mou_t/rendu/TEK2/Module_Memoire/PSU_2016_nmobjdump/objdump
 ** 
 ** Made by Thomas LE MOULLEC
-** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 26 17:02:42 2017 Thomas LE MOULLEC
 ** Last update Sun Feb 26 17:13:54 2017 Thomas LE MOULLEC

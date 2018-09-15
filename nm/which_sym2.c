@@ -1,8 +1,6 @@
 /*
-** which_sym2.c for which_sym2 in /home/le-mou_t/rendu/TEK2/Module_Memoire/PSU_2016_nmobjdump/nm
 ** 
 ** Made by Thomas LE MOULLEC
-** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Sun Feb 26 16:22:40 2017 Thomas LE MOULLEC
 ** Last update Sun Feb 26 17:38:57 2017 Thomas LE MOULLEC

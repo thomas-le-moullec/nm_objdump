@@ -1,8 +1,6 @@
 /*
-** sym_list.c for sym_list in /home/le-mou_t/rendu/TEK2/Module_Memoire/PSU_2016_nmobjdump/nm
 ** 
 ** Made by Thomas LE MOULLEC
-** Login   <le-mou_t@epitech.net>
 ** 
 ** Started on  Fri Feb 24 13:02:45 2017 Thomas LE MOULLEC
 ** Last update Sat Feb 25 20:16:26 2017 Thomas LE MOULLEC
